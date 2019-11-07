@@ -23,11 +23,13 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public class BeerOrderPagedList extends PageImpl<BeerOrderDto> {
-    public BeerOrderPagedList(List<BeerOrderDto> content, Pageable pageable, long total) {
-        super(content, pageable, total);
-    }
+  private static final long serialVersionUID = 4412912222638615685L;
 
-    public BeerOrderPagedList(List<BeerOrderDto> content) {
-        super(content);
-    }
+  public BeerOrderPagedList(final List<BeerOrderDto> content, final Pageable pageable, final long total) {
+    super(content, pageable, total);
+  }
+
+  public BeerOrderPagedList(final List<BeerOrderDto> content) {
+    super(content);
+  }
 }

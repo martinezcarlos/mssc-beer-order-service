@@ -16,6 +16,7 @@
  */
 package guru.sfg.beer.order.service.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,48 +25,38 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Version;
 import java.sql.Timestamp;
 import java.util.UUID;
 
-/**
- * Created by jt on 2019-01-26.
- */
-
+/** Created by jt on 2019-01-26. */
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
 public class BaseEntity {
 
-    public BaseEntity(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate) {
-        this.id = id;
-        this.version = version;
-        this.createdDate = createdDate;
-        this.lastModifiedDate = lastModifiedDate;
-    }
+  @Id
+  @GeneratedValue(generator = "UUID")
+  @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+  @Type(type = "org.hibernate.type.UUIDCharType")
+  @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
+  private UUID id;
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Type(type="org.hibernate.type.UUIDCharType")
-    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false )
-    private UUID id;
+  @Version private Long version;
 
-    @Version
-    private Long version;
+  @CreationTimestamp
+  @Column(updatable = false)
+  private Timestamp createdDate;
 
-    @CreationTimestamp
-    @Column(updatable = false)
-    private Timestamp createdDate;
+  @UpdateTimestamp private Timestamp lastModifiedDate;
 
-    @UpdateTimestamp
-    private Timestamp lastModifiedDate;
-
-    public boolean isNew() {
-        return this.id == null;
-    }
+  public boolean isNew() {
+    return id == null;
+  }
 }
