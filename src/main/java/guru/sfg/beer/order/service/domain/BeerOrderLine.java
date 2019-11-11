@@ -16,7 +16,6 @@
  */
 package guru.sfg.beer.order.service.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,14 +23,13 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import java.sql.Timestamp;
 import java.util.UUID;
 
 /** Created by jt on 2019-01-26. */
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class BeerOrderLine extends BaseEntity {
 
@@ -40,4 +38,23 @@ public class BeerOrderLine extends BaseEntity {
   private String upc;
   private Integer orderQuantity;
   private Integer quantityAllocated;
+
+  @Builder
+  public BeerOrderLine(
+      final UUID id,
+      final Long version,
+      final Timestamp createdDate,
+      final Timestamp lastModifiedDate,
+      final BeerOrder beerOrder,
+      final UUID beerId,
+      final String upc,
+      final Integer orderQuantity,
+      final Integer quantityAllocated) {
+    super(id, version, createdDate, lastModifiedDate);
+    this.beerOrder = beerOrder;
+    this.beerId = beerId;
+    this.upc = upc;
+    this.orderQuantity = orderQuantity;
+    this.quantityAllocated = quantityAllocated;
+  }
 }

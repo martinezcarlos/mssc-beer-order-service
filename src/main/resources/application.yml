@@ -4,3 +4,14 @@ logging:
 
 server:
   port: 8081
+
+services:
+  beer:
+    scheme: http
+    host: localhost
+    port: 8080
+    baseContext: api
+    version: v1
+    endpoints:
+      fetchBeerById: beers/{beerId}
+      fetchBeerByUpc: beers/upc/{upc}

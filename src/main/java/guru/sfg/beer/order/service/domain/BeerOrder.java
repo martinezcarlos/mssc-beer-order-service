@@ -16,7 +16,6 @@
  */
 package guru.sfg.beer.order.service.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,15 +27,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.sql.Timestamp;
 import java.util.Set;
+import java.util.UUID;
 
 /** Created by jt on 2019-01-26. */
 @Getter
 @Setter
 @Entity
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class BeerOrder extends BaseEntity {
 
   private String customerRef;
@@ -46,6 +45,26 @@ public class BeerOrder extends BaseEntity {
   @Fetch(FetchMode.JOIN)
   private Set<BeerOrderLine> beerOrderLines;
 
-  @Builder.Default private OrderStatusEnum orderStatus = OrderStatusEnum.NEW;
+  //  @Builder.Default
+  private OrderStatusEnum orderStatus = OrderStatusEnum.NEW;
   private String orderStatusCallbackUrl;
+
+  @Builder
+  public BeerOrder(
+      final UUID id,
+      final Long version,
+      final Timestamp createdDate,
+      final Timestamp lastModifiedDate,
+      final String customerRef,
+      final Customer customer,
+      final Set<BeerOrderLine> beerOrderLines,
+      final OrderStatusEnum orderStatus,
+      final String orderStatusCallbackUrl) {
+    super(id, version, createdDate, lastModifiedDate);
+    this.customerRef = customerRef;
+    this.customer = customer;
+    this.beerOrderLines = beerOrderLines;
+    this.orderStatus = orderStatus;
+    this.orderStatusCallbackUrl = orderStatusCallbackUrl;
+  }
 }
