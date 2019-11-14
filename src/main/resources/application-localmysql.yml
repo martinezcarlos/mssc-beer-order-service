@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    initialization-mode: always
+    url: jdbc:mysql://127.0.0.1:3307/orderservice?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: order_service
+    password: password
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
