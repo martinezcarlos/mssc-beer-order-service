@@ -52,6 +52,7 @@ local.properties
 ######################
 # Intellij
 ######################
+/.idea/
 .idea/
 *.iml
 *.iws
@@ -110,6 +111,7 @@ Desktop.ini
 ######################
 /bin/
 /deploy/
+/target/
 
 ######################
 # Logs
@@ -138,5 +140,3 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
-/.idea/
-
