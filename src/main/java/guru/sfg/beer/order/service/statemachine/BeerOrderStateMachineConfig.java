@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.statemachine.config.EnableStateMachineFactory;
 import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
+import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
 
 @Configuration
 @EnableStateMachineFactory
@@ -26,5 +27,27 @@ public class BeerOrderStateMachineConfig
         .end(BeerOrderStatusEnum.DELIVERY_EXCEPTION)
         .end(BeerOrderStatusEnum.VALIDATION_EXCEPTION)
         .end(BeerOrderStatusEnum.ALLOCATION_EXCEPTION);
+  }
+
+  @Override
+  public void configure(
+      final StateMachineTransitionConfigurer<BeerOrderStatusEnum, BeerOrderEventEnum> transitions)
+      throws Exception {
+    transitions
+        .withExternal()
+        .source(BeerOrderStatusEnum.NEW)
+        .target(BeerOrderStatusEnum.NEW)
+        .event(BeerOrderEventEnum.VALIDATE_ORDER)
+        // TODO: add validation action here.
+        .and()
+        .withExternal()
+        .source(BeerOrderStatusEnum.NEW)
+        .target(BeerOrderStatusEnum.VALIDATED)
+        .event(BeerOrderEventEnum.VALIDATION_PASSED)
+        .and()
+        .withExternal()
+        .source(BeerOrderStatusEnum.NEW)
+        .target(BeerOrderStatusEnum.VALIDATION_EXCEPTION)
+        .event(BeerOrderEventEnum.VALIDATION_FAILED);
   }
 }
