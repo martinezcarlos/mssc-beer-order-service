@@ -7,8 +7,7 @@ import org.springframework.boot.autoconfigure.jms.artemis.ArtemisAutoConfigurati
 @SpringBootApplication(exclude = ArtemisAutoConfiguration.class)
 public class BeerOrderServiceApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(BeerOrderServiceApplication.class, args);
-    }
-
+  public static void main(final String[] args) {
+    SpringApplication.run(BeerOrderServiceApplication.class, args);
+  }
 }

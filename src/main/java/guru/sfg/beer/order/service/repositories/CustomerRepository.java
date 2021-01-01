@@ -17,14 +17,11 @@
 package guru.sfg.beer.order.service.repositories;
 
 import guru.sfg.beer.order.service.domain.Customer;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 import java.util.UUID;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-/**
- * Created by jt on 2019-01-26.
- */
+/** Created by jt on 2019-01-26. */
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {
-    List<Customer> findAllByCustomerNameLike(String customerName);
+  List<Customer> findAllByCustomerNameLike(String customerName);
 }

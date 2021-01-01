@@ -27,9 +27,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 
-/**
- * Created by jt on 2019-01-26.
- */
+/** Created by jt on 2019-01-26. */
 public interface BeerOrderRepository extends JpaRepository<BeerOrder, UUID> {
 
   Page<BeerOrder> findAllByCustomer(Customer customer, Pageable pageable);
