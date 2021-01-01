@@ -33,7 +33,7 @@ public class BeerOrderDto extends BaseItem {
   private UUID customerId;
   private String customerRef;
   private List<BeerOrderLineDto> beerOrderLines;
-  private BeerOrderStatusEnum orderStatus;
+  private String orderStatus;
   private String orderStatusCallbackUrl;
 
   @Builder
@@ -44,7 +44,7 @@ public class BeerOrderDto extends BaseItem {
       final OffsetDateTime lastModifiedDate,
       final UUID customerId,
       final List<BeerOrderLineDto> beerOrderLines,
-      final BeerOrderStatusEnum orderStatus,
+      final String orderStatus,
       final String orderStatusCallbackUrl,
       final String customerRef) {
     super(id, version, createdDate, lastModifiedDate);
