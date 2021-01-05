@@ -36,7 +36,7 @@ public class BeerOrderStateMachineConfig
     transitions
         .withExternal()
         .source(BeerOrderStatusEnum.NEW)
-        .target(BeerOrderStatusEnum.NEW)
+        .target(BeerOrderStatusEnum.VALIDATION_PENDING)
         .event(BeerOrderEventEnum.VALIDATE_ORDER)
         // TODO: add validation action here.
         .and()
