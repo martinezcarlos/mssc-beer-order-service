@@ -1,18 +1,21 @@
 package guru.sfg.brewery.order.service.services;
 
-import guru.sfg.brewery.order.service.domain.BeerOrder;
-import guru.sfg.brewery.order.service.domain.BeerOrderEventEnum;
-import guru.sfg.brewery.order.service.domain.BeerOrderStatusEnum;
-import guru.sfg.brewery.order.service.repositories.BeerOrderRepository;
-import guru.sfg.brewery.order.service.statemachine.BeerOrderStateChangeInterceptor;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
+import java.util.UUID;
+
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.StateMachineFactory;
 import org.springframework.statemachine.support.DefaultStateMachineContext;
 import org.springframework.stereotype.Service;
+
+import guru.sfg.brewery.order.service.domain.BeerOrder;
+import guru.sfg.brewery.order.service.domain.BeerOrderEventEnum;
+import guru.sfg.brewery.order.service.domain.BeerOrderStatusEnum;
+import guru.sfg.brewery.order.service.repositories.BeerOrderRepository;
+import guru.sfg.brewery.order.service.statemachine.BeerOrderStateChangeInterceptor;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +32,16 @@ public class BeerOrderManagerImpl implements BeerOrderManager {
         .map(this::sanitizeOrder)
         .map(this::saveOrderAndNotify)
         .orElseThrow(() -> new IllegalArgumentException("BeerOder cannot be null"));
+  }
+
+  @Override
+  public void processValidationResult(UUID orderId, Boolean isValid) {
+    final BeerOrder beerOrder = beerOrderRepository.findOneById(orderId);
+    if (isValid) {
+      sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.VALIDATION_PASSED);
+    } else {
+      sendBeerOrderEvent(beerOrder, BeerOrderEventEnum.VALIDATION_FAILED);
+    }
   }
 
   private BeerOrder sanitizeOrder(final BeerOrder beerOrder) {
